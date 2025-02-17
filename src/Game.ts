@@ -1,6 +1,11 @@
 export class Game {
+    currentScore: number = 0;
     public score(): number
     {
-        return 0;
+        return this.currentScore;
+    }
+
+    roll(knockedPinsCount: number) {
+        this.currentScore += knockedPinsCount;
     }
 }
