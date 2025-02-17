@@ -3,6 +3,7 @@
     "types": ["jest", "node"],  // Add jest here
     "module": "commonjs",
     "target": "es6",
+    "strict": true,
     "outDir": "./dist"
   }
 }
