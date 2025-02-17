@@ -5,13 +5,19 @@ describe('Game class', () => {
         const game = new Game();
         expect(game.score()).toBe(0);
     });
-});
 
-describe('Game class', () => {
     test('should return score as 1 if a single pin is knocked in a frame', () => {
         const game = new Game();
         game.roll(1);
         game.roll(0);
         expect(game.score()).toBe(1);
+    });
+
+    test('should throw exception on 21st roll if no bonuses', () => {
+        const game = new Game();
+        for (let i = 0; i < 20; i++) {
+            game.roll(0);
+        }
+        expect(() => game.roll(0)).toThrow('Game over. Cannot roll more than 20 times.');
     });
 });
