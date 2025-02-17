@@ -1,7 +1,7 @@
 export class Game {
     currentScore: number = 0;
-    public score(): number
-    {
+
+    public score(): number {
         return this.currentScore;
     }
 
