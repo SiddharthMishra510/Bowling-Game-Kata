@@ -16,10 +16,10 @@ export class Frames {
       score += frame.getScore();
       if (!this.isFirstFrame(frame)) {
         let frameBefore = this.frameBefore(frame);
-        if (frameBefore.isSpare() && this.isBonusFrame(frame)) {
+        if (frameBefore.isSpare() && this.isNotBonusFrame(frame)) {
           score += frame.getFirstRoll();
         }
-        if (frameBefore.isStrike() && this.isBonusFrame(frame)) {
+        if (frameBefore.isStrike() && this.isNotBonusFrame(frame)) {
           score += frame.getScore();
         }
       }
@@ -50,7 +50,7 @@ export class Frames {
     return this.frameArray[this.frameArray.indexOf(frame) - 1];
   }
 
-  private isBonusFrame(frame: Frame) {
+  private isNotBonusFrame(frame: Frame) {
     return this.frameArray.indexOf(frame) !== (this.lastFrameIndex + 1);
   }
 
