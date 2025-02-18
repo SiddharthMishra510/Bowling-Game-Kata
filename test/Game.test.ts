@@ -58,4 +58,14 @@ describe('Game class', () => {
     game.roll(3);
     expect(game.score()).toBe(13);
   });
+
+  test('should return score of 0 for all gutter balls', () => {
+    const game = new Game();
+    
+    for (let i = 0; i < 20; i++) {
+      game.roll(0);
+    }
+
+    expect(game.score()).toBe(0);
+  });
 });
