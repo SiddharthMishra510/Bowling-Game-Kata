@@ -16,15 +16,19 @@ export class Frame {
         return (this.firstRoll || 0) + (this.secondRoll || 0);
     }
 
-    public isFull(): boolean {
-        return this.firstRoll !== undefined && this.secondRoll !== undefined;
+    public isComplete(): boolean {
+        return (this.firstRoll !== undefined && this.secondRoll !== undefined) || this.isStrike();
     }
 
     public isSpare(): boolean {
-        return this.isFull() && (this.firstRoll! + this.secondRoll! === 10);
+        return this.isComplete() && (this.firstRoll! + this.secondRoll! === 10);
     }
 
     public getFirstRoll(): number {
         return this.firstRoll ?? 0;
+    }
+
+    public isStrike(): boolean  {
+        return this.firstRoll !== undefined && this.firstRoll == 10;
     }
 }

@@ -28,4 +28,12 @@ describe('Game class', () => {
         game.roll(4);
         expect(game.score()).toBe(18);
     });
+
+    test('should apply bonus for strike', () => {
+        const game = new Game();
+        game.roll(10);
+        game.roll(2);
+        game.roll(2);
+        expect(game.score()).toBe(18);
+    });
 });
