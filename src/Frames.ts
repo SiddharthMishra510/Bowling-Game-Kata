@@ -16,7 +16,7 @@ export class Frames {
       score += frame.getScore();
       if (!this.isFirstFrame(frame)) {
         let frameBefore = this.frameBefore(frame);
-        if (frameBefore.isSpare()) {
+        if (frameBefore.isSpare() && this.isBonusFrame(frame)) {
           score += frame.getFirstRoll();
         }
         if (frameBefore.isStrike() && this.isBonusFrame(frame)) {
@@ -31,7 +31,7 @@ export class Frames {
   public registerRoll(pinsKnocked: number): void {
     let currentFrame = this.frameArray[this.frameArray.length - 1];
     if (currentFrame.isComplete()) {
-      if (this.isLastFrame(currentFrame) && !currentFrame.isStrike()) {
+      if (this.isLastFrame(currentFrame) && !currentFrame.isStrike() && !currentFrame.isSpare()) {
         throw new Error('Game over. Cannot roll more than 20 times.');
       }
       let newFrame = new Frame();

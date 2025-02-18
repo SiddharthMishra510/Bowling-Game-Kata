@@ -28,7 +28,7 @@ describe('Game class', () => {
     game.roll(4);
     expect(game.score()).toBe(18);
   });
-  
+
   test('should apply bonus for strike', () => {
     const game = new Game();
     game.roll(10);
@@ -46,5 +46,16 @@ describe('Game class', () => {
     game.roll(3);
     game.roll(2);
     expect(game.score()).toBe(15);
+  });
+
+  test('should allow for extra roll if 10th frame is a spare', () => {
+    const game = new Game();
+    for (let i = 0; i < 18; i++) {
+      game.roll(0);
+    }
+    game.roll(8);
+    game.roll(2);
+    game.roll(3);
+    expect(game.score()).toBe(13);
   });
 });
