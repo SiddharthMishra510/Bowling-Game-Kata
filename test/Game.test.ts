@@ -20,4 +20,12 @@ describe('Game class', () => {
         }
         expect(() => game.roll(0)).toThrow('Game over. Cannot roll more than 20 times.');
     });
+
+    test('should apply bonus for spare', () => {
+        const game = new Game();
+        game.roll(3);
+        game.roll(7);
+        game.roll(4);
+        expect(game.score()).toBe(18);
+    });
 });
