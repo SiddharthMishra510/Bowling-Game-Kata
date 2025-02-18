@@ -1,13 +1,14 @@
-import {Frames} from "./Frames";
+import { Frames } from './Frames';
 
 export class Game {
-    frames: Frames = new Frames();
+  frames: Frames = new Frames();
 
-    public score(): number {
-       return this.frames.score();
-    }
+  public score(): number {
+    return this.frames.score();
+  }
 
-    public roll(knockedPins: number) {
-        this.frames.registerRoll(knockedPins);
-    }
+    
+  public roll(knockedPins: number) {
+    this.frames.registerRoll(knockedPins);
+  }
 }
