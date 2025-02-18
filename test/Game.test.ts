@@ -36,4 +36,15 @@ describe('Game class', () => {
     game.roll(2);
     expect(game.score()).toBe(18);
   });
+
+  test('should allow for extra frame if 10th frame is a strike', () => {
+    const game = new Game();
+    for (let i = 0; i < 18; i++) {
+      game.roll(0);
+    }
+    game.roll(10);
+    game.roll(3);
+    game.roll(2);
+    expect(game.score()).toBe(15);
+  });
 });

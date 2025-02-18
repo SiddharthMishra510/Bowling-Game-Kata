@@ -1,8 +1,13 @@
 import { Frame } from './Frame';
 
 export class Frames {
-  frameArray: Frame[] = Array.from({ length: 10 }, () => new Frame());
-  currentIndex: number = 0;
+  frameArray: Frame[];
+  private bonusFrameIndex: number = 10;
+
+  public constructor() {
+    this.frameArray = [];
+    this.frameArray.push(new Frame());
+  }
 
   public score(): number {
     let score = 0;
@@ -14,7 +19,7 @@ export class Frames {
         if (previousFrame.isSpare()) {
           score += frame.getFirstRoll();
         }
-        if (previousFrame.isStrike()) {
+        if (previousFrame.isStrike() && index !== this.bonusFrameIndex) {
           score += frame.getScore();
         }
       }
@@ -24,16 +29,19 @@ export class Frames {
   }
 
   public registerRoll(pinsKnocked: number): void {
-    let currentFrame = this.frameArray[this.currentIndex];
-
-    if (currentFrame.isComplete()) {
-      this.currentIndex++;
-      if (this.currentIndex >= this.frameArray.length) {
-        throw new Error('Game over. Cannot roll more than 20 times.');
+    let latestFrameIndex = this.frameArray.length - 1;
+    let latestFrame = this.frameArray[latestFrameIndex];
+    if (latestFrame.isComplete()) {
+      if (latestFrameIndex === 9) {
+        if (!latestFrame.isStrike()) {
+          throw new Error('Game over. Cannot roll more than 20 times.');
+        }
       }
-      currentFrame = this.frameArray[this.currentIndex];
+      let newFrame = new Frame();
+      newFrame.addRoll(pinsKnocked);
+      this.frameArray.push(newFrame);
+    } else {
+      latestFrame.addRoll(pinsKnocked);
     }
-    
-    currentFrame.addRoll(pinsKnocked);
   }
 }
