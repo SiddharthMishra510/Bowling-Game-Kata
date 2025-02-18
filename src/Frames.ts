@@ -1,8 +1,8 @@
 import { Frame } from './Frame';
 
 export class Frames {
-  frameArray: Frame[];
-  private bonusFrameIndex: number = 10;
+  private readonly frameArray: Frame[];
+  private readonly lastFrameIndex: number = 9;
 
   public constructor() {
     this.frameArray = [];
@@ -12,14 +12,14 @@ export class Frames {
   public score(): number {
     let score = 0;
 
-    this.frameArray.forEach((frame, index) => {
+    this.frameArray.forEach((frame) => {
       score += frame.getScore();
-      if (index > 0) {
-        let previousFrame = this.frameArray[index - 1];
-        if (previousFrame.isSpare()) {
+      if (!this.isFirstFrame(frame)) {
+        let frameBefore = this.frameBefore(frame);
+        if (frameBefore.isSpare()) {
           score += frame.getFirstRoll();
         }
-        if (previousFrame.isStrike() && index !== this.bonusFrameIndex) {
+        if (frameBefore.isStrike() && this.isBonusFrame(frame)) {
           score += frame.getScore();
         }
       }
@@ -29,19 +29,32 @@ export class Frames {
   }
 
   public registerRoll(pinsKnocked: number): void {
-    let latestFrameIndex = this.frameArray.length - 1;
-    let latestFrame = this.frameArray[latestFrameIndex];
-    if (latestFrame.isComplete()) {
-      if (latestFrameIndex === 9) {
-        if (!latestFrame.isStrike()) {
-          throw new Error('Game over. Cannot roll more than 20 times.');
-        }
+    let currentFrame = this.frameArray[this.frameArray.length - 1];
+    if (currentFrame.isComplete()) {
+      if (this.isLastFrame(currentFrame) && !currentFrame.isStrike()) {
+        throw new Error('Game over. Cannot roll more than 20 times.');
       }
       let newFrame = new Frame();
       newFrame.addRoll(pinsKnocked);
       this.frameArray.push(newFrame);
     } else {
-      latestFrame.addRoll(pinsKnocked);
+      currentFrame.addRoll(pinsKnocked);
     }
+  }
+
+  private isFirstFrame(frame: Frame) {
+    return this.frameArray.indexOf(frame) === 0;
+  }
+
+  private frameBefore(frame: Frame) {
+    return this.frameArray[this.frameArray.indexOf(frame) - 1];
+  }
+
+  private isBonusFrame(frame: Frame) {
+    return this.frameArray.indexOf(frame) !== (this.lastFrameIndex + 1);
+  }
+
+  private isLastFrame(frame: Frame) {
+    return this.frameArray.indexOf(frame) === this.lastFrameIndex;
   }
 }
