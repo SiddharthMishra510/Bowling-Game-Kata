@@ -61,11 +61,34 @@ describe('Game class', () => {
 
   test('should return score of 0 for all gutter balls', () => {
     const game = new Game();
-    
+
     for (let i = 0; i < 20; i++) {
       game.roll(0);
     }
 
     expect(game.score()).toBe(0);
+  });
+
+  test('should return correct score for mixed strikes and spares', () => {
+    const game = new Game();
+    
+    game.roll(10); // Strike
+    game.roll(5);
+    game.roll(5); // Spare
+    game.roll(3);
+    game.roll(6); // Normal
+    game.roll(10); // Strike
+    game.roll(2);
+    game.roll(3); // Normal
+    game.roll(8);
+    game.roll(2); // Spare
+    game.roll(4);
+    game.roll(3); // Normal
+    game.roll(7);
+    game.roll(3); // Spare
+    game.roll(6);
+    game.roll(2); // Normal
+
+    expect(game.score()).toBe(107);
   });
 });
