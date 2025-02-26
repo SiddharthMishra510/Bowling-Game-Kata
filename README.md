@@ -1,5 +1,5 @@
 ﻿Bowling Kata
-[http://www.butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata](https://kata-log.rocks/bowling-game-kata)
+[https://kata-log.rocks/bowling-game-kata](https://kata-log.rocks/bowling-game-kata)
 
 - game consists of 10 frames
 
